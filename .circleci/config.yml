@@ -15,7 +15,7 @@ jobs:
       command: |
        gb="/src/github.com/${CIRCLE_PROJECT_USERNAME}";
        if [ ${CIRCLE_PROJECT_USERNAME} == 'Jason2303' ]; then
-         dr="securingdevops"
+         dr="atlas201"
        else
          dr=$DOCKER_USER
        fi
