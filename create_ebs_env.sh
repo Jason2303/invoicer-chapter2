@@ -42,7 +42,7 @@ aws rds create-db-instance \
     --allocated-storage "$dbstorage" \
     --db-instance-class "$dbinstclass" \
     --engine postgres \
-    --engine-version 9.6.2 \
+    --engine-version 16.3 \
     --auto-minor-version-upgrade \
     --publicly-accessible \
     --master-username invoicer \
