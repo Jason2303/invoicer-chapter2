@@ -1,0 +1,27 @@
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21' 
+      - name: Setup environment
+        run: echo "DOCKER_REPO=atlas201" >> $GITHUB_ENV 
+      - name: Test application
+        run: go test github.com/Jason2303/invoicer-chapter2
+      - name: Build and push Docker image
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
+          go install --ldflags '-extldflags "-static"' github.com/Jason2303/invoicer-chapter2
+          mkdir bin
+          cp $GOPATH/bin/invoicer-chapter2 bin/invoicer
+          docker build -t atlas201/invoicer-chapter2 .
+          docker push atlas201/invoicer-chapter2
