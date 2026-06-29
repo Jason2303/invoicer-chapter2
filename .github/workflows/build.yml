@@ -13,7 +13,11 @@ jobs:
         with:
           go-version: '1.21' 
       - name: Setup environment
-        run: echo "DOCKER_REPO=atlas201" >> $GITHUB_ENV 
+        run: echo "DOCKER_REPO=atlas201" >> $GITHUB_ENV
+      - name: Initialize Go module
+        run: |
+          go mod init github.com/Jason2303/invoicer-chapter2
+          go mod tidy 
       - name: Test application
         run: |
           go test ./...
