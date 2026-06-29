@@ -19,12 +19,12 @@ jobs:
           go mod init github.com/Jason2303/invoicer-chapter2
           go mod tidy 
       - name: Test application
-        run: |
-          go test ./...
+        run: go test -mod=mod ./...
+       
       - name: Build and push Docker image
         if: github.ref == 'refs/heads/master'
         run: |
           docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
-          go build --ldflags '-extldflags "-static"' -o bin/invoicer .
+          go build -mod=mod --ldflags '-extldflags "-static"' -o bin/invoicer .
           docker build -t atlas201/invoicer-chapter2 .
           docker push atlas201/invoicer-chapter2
